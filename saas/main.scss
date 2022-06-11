@@ -1,0 +1,11 @@
+// $primary:#f5b27f;
+$light:#9ce688;
+@import '../node_modules/bootstrap/scss/_functions';
+@import '../node_modules/bootstrap/scss/_variables';
+$custom-theme-colors:(
+    "altlight":#9fcaf5,
+    "altdark":#310ff5
+);
+
+$theme-colors:map-merge($custom-theme-colors,$theme-colors);
+@import '../node_modules/bootstrap/scss/bootstrap';
