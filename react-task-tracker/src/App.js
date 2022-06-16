@@ -25,6 +25,8 @@ function App() {
       reminder: false,
     },
   ]);
+  const [searchTerm,setSearchTerm]=useState("");
+  const [searchResults,SetSearchResults]=useState([]);
 
   //addTask
   const addTask = (tasks) => {
@@ -34,6 +36,20 @@ function App() {
     setTasks([...task, newTask]);
   };
 
+  const searchHandler=(searchTerm)=>{
+    setSearchTerm(searchTerm);
+    if(searchTerm!=""){
+      const newTask=task.filter((task)=>{
+        return Object.values(task).join(" ").toLowerCase().includes(searchTerm.toLowerCase());
+
+      });
+      SetSearchResults(newTask);
+    }
+    else{
+      SetSearchResults(task);
+    }
+    // console.log(searchTerm);
+  };
   //Delete Task
   const delTask = (id) => {
     // console.log('delete',id)
@@ -52,13 +68,14 @@ function App() {
 
   return (
     <div className="container">
-      <Header title="Task Tracker" color="red" onAdd={()=>setShow(!show)} showAdd={show}/>
+      <Header title="Task Tracker" color="red" onAdd={()=>setShow(!show)} showAdd={show} task={searchTerm.length< 1? task : searchResults} term={searchTerm} searchKeyword={searchHandler}/>
       {show && <AddTask onAdd={addTask} />}
       {task.length > 0 ? (
         <Tasks task={task} onDelete={delTask} onToggle={toggleReminder} />
       ) : (
         "No Tasks to show"
       )}
+
     </div>
   );
 }
